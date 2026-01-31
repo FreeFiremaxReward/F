@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Spin Reward</title>
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:system-ui,sans-serif;
+}
+
+/* BACKGROUND */
+body{
+  height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background-image:url("https://i.imgur.com/UmoK9Sh.jpeg");
+  background-size:cover;
+  background-position:center;
+  background-repeat:no-repeat;
+  color:#fff;
+}
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.6);
+  z-index:-1;
+}
+
+/* HEADER */
+.header{
+  position:fixed;
+  top:12px;
+  left:12px;
+  right:12px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  z-index:30;
+}
+.header h1{
+  font-size:1.1rem;
+  font-weight:900;
+  color:#fff;
+}
+.header img{
+  width:60px;
+  height:auto;
+}
+
+/* WRAPPER */
+.wrapper{
+  position:relative;
+  width:320px;
+  height:360px;
+}
+
+/* WHEEL TITLE */
+.wheel-title{
+  position:absolute;
+  top:-28px;
+  left:50%;
+  transform:translateX(-50%);
+  font-size:1.2rem;
+  font-weight:900;
+  color:#fff;
+  text-align:center;
+}
+
+/* NEEDLE */
+.needle{
+  position:absolute;
+  top:0;
+  left:50%;
+  transform:translateX(-50%) rotate(180deg);
+  width:0;
+  height:0;
+  border-left:16px solid transparent;
+  border-right:16px solid transparent;
+  border-bottom:32px solid red;
+  z-index:10;
+}
+
+/* WHEEL */
+.wheel{
+  margin-top:18px;
+  width:320px;
+  height:320px;
+  border-radius:50%;
+  border:4px solid #ff9f00;
+  position:relative;
+  transition:transform 4s cubic-bezier(.17,.67,.17,1);
+}
+
+/* REWARD */
+.reward{
+  position:absolute;
+  top:50%;
+  left:50%;
+  width:70px;
+  height:70px;
+  margin:-35px;
+  border-radius:12px;
+  overflow:hidden;
+  background:#000;
+  box-shadow:0 0 10px #ff9f00;
+}
+.reward img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+/* SPIN BUTTON */
+.spin-btn{
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  width:90px;
+  height:90px;
+  border-radius:50%;
+  border:none;
+  background:#ff9f00;
+  font-weight:900;
+  color:#000;
+  z-index:5;
+}
+
+/* POPUP */
+.popup{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.85);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:20;
+}
+.popup-box{
+  background:#000;
+  padding:22px 20px 20px;
+  border-radius:14px;
+  border:2px solid #ff9f00;
+  text-align:center;
+}
+
+/* POPUP TITLE */
+.popup-title{
+  font-size:1.2rem;
+  font-weight:900;
+  color:#fff;
+  margin-bottom:10px;
+  letter-spacing:1px;
+}
+
+.popup-box img{
+  width:220px;
+  height:220px;
+  object-fit:cover;
+  border-radius:12px;
+  margin-bottom:15px;
+}
+
+/* CLAIM BUTTON */
+.claim-btn{
+  width:100%;
+  padding:12px;
+  background:#ff9f00;
+  border:none;
+  font-weight:900;
+  border-radius:8px;
+}
+
+/* FOOTER DISCLAIMER */
+.footer{
+  position:fixed;
+  bottom:8px;
+  left:0;
+  right:0;
+  text-align:center;
+  font-size:0.75rem;
+  color:#fff;
+  opacity:0.75;
+  z-index:30;
+}
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <h1>FFWS 2026 Registration Reward</h1>
+  <img src="https://i.imgur.com/yUKn63V.png" alt="Logo">
+</div>
+
+<div class="wrapper">
+  <div class="wheel-title">Spin &amp; Win</div>
+  <div class="needle"></div>
+
+  <div class="wheel" id="wheel">
+    <div class="reward" style="transform:rotate(0deg) translate(0,-130px)">
+      <img src="https://i.imgur.com/MwcU2E1.jpeg">
+    </div>
+    <div class="reward" style="transform:rotate(51.43deg) translate(0,-130px)">
+      <img src="https://i.imgur.com/yJMf01h.jpeg">
+    </div>
+    <div class="reward" style="transform:rotate(102.86deg) translate(0,-130px)">
+      <img src="https://i.imgur.com/oDrgz0y.png">
+    </div>
+    <div class="reward" style="transform:rotate(154.29deg) translate(0,-130px)">
+      <img src="https://i.imgur.com/wlp1A7K.jpeg">
+    </div>
+    <div class="reward" style="transform:rotate(205.72deg) translate(0,-130px)">
+      <img src="https://i.imgur.com/8RREfaa.jpeg">
+    </div>
+    <div class="reward" style="transform:rotate(257.15deg) translate(0,-130px)">
+      <img src="https://i.imgur.com/RQrUw1S.png">
+    </div>
+    <div class="reward" style="transform:rotate(308.58deg) translate(0,-130px)">
+      <img src="https://i.imgur.com/jHohY78.jpeg">
+    </div>
+  </div>
+
+  <button class="spin-btn" id="spinBtn" onclick="spin()">SPIN</button>
+</div>
+
+<div class="popup" id="popup">
+  <div class="popup-box">
+    <div class="popup-title">CONGRATULATIONS</div>
+    <img id="resultImg">
+    <button class="claim-btn" onclick="claim()">CLAIM</button>
+  </div>
+</div>
+
+<div class="footer">
+  @ All rights go to FREE FIRE community
+</div>
+
+<script>
+const images=[
+ "https://i.imgur.com/MwcU2E1.jpeg",
+ "https://i.imgur.com/yJMf01h.jpeg",
+ "https://i.imgur.com/oDrgz0y.png",
+ "https://i.imgur.com/wlp1A7K.jpeg",
+ "https://i.imgur.com/8RREfaa.jpeg",
+ "https://i.imgur.com/RQrUw1S.png",
+ "https://i.imgur.com/jHohY78.jpeg"
+];
+
+const wheel=document.getElementById("wheel");
+const spinBtn=document.getElementById("spinBtn");
+const popup=document.getElementById("popup");
+let rotation=0;
+const slice=360/images.length;
+
+function spin(){
+  spinBtn.style.display="none";
+  const winner=Math.floor(Math.random()*images.length);
+  const stopAngle=360-(winner*slice);
+  rotation+=1440+stopAngle;
+  wheel.style.transform=`rotate(${rotation}deg)`;
+
+  setTimeout(()=>{
+    resultImg.src=images[winner];
+    popup.style.display="flex";
+  },4000);
+}
+
+function claim(){
+  spinBtn.style.display="block";
+  window.location.href="https://whatsapp.com/channel/0029VbC7ImaB4hdSxCkMJt0H";
+}
+</script>
+
+</body>
+</html>
